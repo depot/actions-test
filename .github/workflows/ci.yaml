@@ -1,0 +1,14 @@
+name: CI
+on: push
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  oidc:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: |
+          curl -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=depot.dev"
