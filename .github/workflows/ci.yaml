@@ -10,9 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - run: |
-          curl -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=depot.dev" > token.json
-      - uses: actions/upload-artifact@v3
-        with:
-          name: token.json
-          path: token.json
+      - uses: depot/setup-action@v1
+      - run: depot build .
+        env:
+          DEPOT_EXPERIMENTAL_OIDC: 1
