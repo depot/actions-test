@@ -1,16 +1,14 @@
 name: CI
-on: push
-
-permissions:
-  contents: read
-  id-token: write
+on:
+  workflow_dispatch: {}
 
 jobs:
   oidc:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: depot/setup-action@v1
-      - run: depot build .
-        env:
-          DEPOT_EXPERIMENTAL_OIDC: 1
+      - run: |
+          while true; do
+            echo "Waiting for auth (0ed5c6ec-abd0-4d48-9ed9-888176abb2aa)"
+            sleep 5
+          done
