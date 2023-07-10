@@ -1,3 +1,4 @@
 FROM node:16
 
-RUN echo hi > out
+ARG INPUT
+RUN echo ${INPUT} && exit 1

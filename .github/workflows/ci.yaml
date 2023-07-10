@@ -1,16 +1,23 @@
 name: CI
 on:
-  pull_request: {}
-  workflow_dispatch: {}
+  push: {}
+  # pull_request: {}
+  # workflow_dispatch: {}
 
 jobs:
   oidc:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - run: env
-      - run: |
-          while true; do
-            echo "Waiting for auth (0ed5c6ec-abd0-4d48-9ed9-888176abb2aa)"
-            sleep 5
-          done
+      - uses: depot/setup-action@v1
+      - uses: depot/build-push-action@v1
+        env:
+          INPUT: hello-world
+        with:
+          build-args: |
+            INPUT=${INPUT}
+      # - run: |
+      #     while true; do
+      #       echo "Waiting for auth (0ed5c6ec-abd0-4d48-9ed9-888176abb2aa)"
+      #       sleep 5
+      #     done
