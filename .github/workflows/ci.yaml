@@ -10,6 +10,10 @@ jobs:
     permissions:
       contents: read
       id-token: write
+    strategy:
+      matrix:
+        some: ["value"]
+        region: ["us-east-1", "us-west-2"]
     steps:
       # - uses: actions/checkout@v3
       # - uses: depot/setup-action@v1
@@ -20,10 +24,10 @@ jobs:
       #     build-args: |
       #       INPUT=${INPUT}
       - run: env
-      - run: cat $GITHUB_EVENT_PATH | base64
+      - run: cat $GITHUB_EVENT_PATH | jq -c .
       - run: |
           while true; do
             echo "Waiting for auth (0ed5c6ec-abd0-4d48-9ed9-888176abb2aa)"
             sleep 5
           done
-        timeout-minutes: 60
+        timeout-minutes: 10
