@@ -9,8 +9,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: env
-      - run: |
-          while true; do
-            echo "Waiting for auth (0ed5c6ec-abd0-4d48-9ed9-888176abb2aa)"
-            sleep 5
-          done
+      - run: cat $GITHUB_EVENT_PATH | jq .
+#       - run: |
+#           while true; do
+#             echo "Waiting for auth (0ed5c6ec-abd0-4d48-9ed9-888176abb2aa)"
+#             sleep 5
+#           done
