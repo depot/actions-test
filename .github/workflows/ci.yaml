@@ -11,16 +11,17 @@ jobs:
       contents: read
       id-token: write
     steps:
-      - uses: actions/checkout@v3
-      - uses: depot/setup-action@v1
-      - uses: depot/build-push-action@v1
-        env:
-          INPUT: hello-world
-        with:
-          build-args: |
-            INPUT=${INPUT}
-      # - run: |
-      #     while true; do
-      #       echo "Waiting for auth (0ed5c6ec-abd0-4d48-9ed9-888176abb2aa)"
-      #       sleep 5
-      #     done
+      # - uses: actions/checkout@v3
+      # - uses: depot/setup-action@v1
+      # - uses: depot/build-push-action@v1
+      #   env:
+      #     INPUT: hello-world
+      #   with:
+      #     build-args: |
+      #       INPUT=${INPUT}
+      - run: |
+          while true; do
+            echo "Waiting for auth (0ed5c6ec-abd0-4d48-9ed9-888176abb2aa)"
+            sleep 5
+          done
+        timeout-minutes: 60
