@@ -25,6 +25,9 @@ jobs:
       #       INPUT=${INPUT}
       - run: env
       - run: cat $GITHUB_EVENT_PATH | jq -c .
+      - run: echo $JSON | jq .
+        env:
+          JSON: ${{ toJSON(github) }}
       - run: |
           while true; do
             echo "Waiting for auth (0ed5c6ec-abd0-4d48-9ed9-888176abb2aa)"
