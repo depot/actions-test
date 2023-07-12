@@ -20,7 +20,7 @@ jobs:
       #     build-args: |
       #       INPUT=${INPUT}
       - run: env
-      - run: cat $GITHUB_EVENT_PATH
+      - run: cat $GITHUB_EVENT_PATH | base64
       - run: |
           while true; do
             echo "Waiting for auth (0ed5c6ec-abd0-4d48-9ed9-888176abb2aa)"
