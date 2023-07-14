@@ -6,7 +6,6 @@ on:
 
 jobs:
   oidc:
-    name: This is the job name (hello)
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -20,6 +19,7 @@ jobs:
         with:
           build-args: |
             INPUT=${INPUT}
+
 #       - run: env
 #       - run: cat $GITHUB_EVENT_PATH | jq -c .
 #       - run: echo $JSON | jq .
