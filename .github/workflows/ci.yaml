@@ -10,10 +10,6 @@ jobs:
     permissions:
       contents: read
       id-token: write
-    strategy:
-      matrix:
-        some: ["value"]
-        region: ["us-east-1", "us-west-2"]
     steps:
       - uses: actions/checkout@v3
       - uses: depot/setup-action@v1
