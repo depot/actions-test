@@ -1,4 +1,4 @@
 FROM node:16
 
 ARG INPUT
-RUN echo ${INPUT} && exit 1
+RUN echo ${INPUT} > out.txt
