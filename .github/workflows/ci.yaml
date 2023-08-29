@@ -11,6 +11,7 @@ jobs:
       contents: read
       id-token: write
     steps:
+      - run: sudo apt-get install -y iperf
       - name: us-east-1
         run: |
           iperf -c 54.236.200.29 --parallel 40 -i 1 -t 2
