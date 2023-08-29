@@ -14,7 +14,7 @@ jobs:
       - run: sudo apt-get install -y iperf
       - name: us-east-1
         run: |
-          iperf -c 54.236.200.29 --parallel 40 -i 1 -t 2
+          iperf -c 54.236.200.29 -r # --parallel 40 -i 1 -t 2
       - name: eu-central-1
         run: |
-          iperf -c 52.57.120.242 --parallel 40 -i 1 -t 2
+          iperf -c 52.57.120.242 -r # --parallel 40 -i 1 -t 2
