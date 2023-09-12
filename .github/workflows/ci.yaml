@@ -10,24 +10,34 @@ jobs:
     permissions:
       contents: read
       id-token: write
+    strategy:
+      fail-fast: false
+      matrix:
+        count:
+          [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+          ]
     steps:
       - uses: actions/checkout@v3
       - uses: depot/setup-action@v1
-      - uses: depot/build-push-action@public-oidc
-        env:
-          INPUT: hello-world
-        with:
-          build-args: |
-            INPUT=${INPUT}
-
-#       - run: env
-#       - run: cat $GITHUB_EVENT_PATH | jq -c .
-#       - run: echo $JSON | jq .
-#         env:
-#           JSON: ${{ toJSON(github) }}
-#       - run: |
-#           while true; do
-#             echo "Waiting for auth (0ed5c6ec-abd0-4d48-9ed9-888176abb2aa)"
-#             sleep 5
-#           done
-#         timeout-minutes: 10
+      - uses: depot/build-push-action@v1
