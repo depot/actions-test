@@ -1,0 +1,40 @@
+name: agentd version
+on:
+  push:
+    branches: [agentd-version-check]
+  workflow_dispatch: {}
+
+jobs:
+  unix:
+    strategy:
+      fail-fast: false
+      matrix:
+        runner:
+          - depot-ubuntu-24.04
+          - depot-ubuntu-24.04-arm
+          - depot-ubuntu-22.04
+          - depot-macos-15
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - name: Report agentd version
+        run: |
+          echo "Installed binary: $(/usr/local/bin/agentd --version 2>&1 || true)"
+          echo "Running processes:"
+          sudo ps -eo pid,args | grep -E '[a]gentd' || true
+          for pid in $(pgrep -f agentd); do
+            exe=$(sudo readlink "/proc/$pid/exe" 2>/dev/null || sudo ps -o comm= -p "$pid")
+            echo "pid $pid: $exe -> $(sudo "$exe" --version 2>&1 | head -1)"
+          done
+          echo "Downloaded updates:"
+          sudo find /tmp /private/tmp /var/folders -maxdepth 4 -name 'agentd-*' 2>/dev/null || true
+
+  windows:
+    runs-on: depot-windows-2025
+    steps:
+      - name: Report agentd version
+        shell: pwsh
+        run: |
+          Get-CimInstance Win32_Process | Where-Object { $_.Name -like 'agentd*' } | ForEach-Object {
+            "pid $($_.ProcessId): $($_.ExecutablePath) -> $(& $_.ExecutablePath --version 2>&1 | Select-Object -First 1)"
+          }
+          Get-ChildItem -Path $env:TEMP, C:\Windows\Temp -Filter 'agentd-*' -ErrorAction SilentlyContinue | Select-Object FullName
