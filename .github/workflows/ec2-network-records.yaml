@@ -1,0 +1,13 @@
+name: EC2 network records
+on:
+  push:
+    branches: [ec2-runner-network-records]
+  workflow_dispatch: {}
+
+jobs:
+  network:
+    runs-on: depot-ubuntu-24.04,connection=ghaec2
+    steps:
+      - run: curl -fsS -o /dev/null -w '%{http_code}\n' https://example.com
+      - run: curl -fsS -o /dev/null -w '%{http_code}\n' https://api.github.com
+      - run: dig +short depot.dev || getent hosts depot.dev
