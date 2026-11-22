@@ -10,4 +10,10 @@ jobs:
     steps:
       - run: curl -fsS -o /dev/null -w '%{http_code}\n' https://example.com
       - run: curl -fsS -o /dev/null -w '%{http_code}\n' https://api.github.com
-      - run: dig +short depot.dev || getent hosts depot.dev
+      - name: Check that www.google.com is blocked
+        run: |
+          if curl -fsS -m 15 -o /dev/null -w '%{http_code}\n' https://www.google.com; then
+            echo "www.google.com is reachable"
+            exit 1
+          fi
+          echo "www.google.com is blocked"
