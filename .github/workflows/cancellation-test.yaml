@@ -1,0 +1,47 @@
+name: Cancellation test
+on:
+  push:
+    branches: [cancellation-behavior-test]
+
+concurrency:
+  group: cancellation-test-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  slow:
+    runs-on: ubuntu-latest
+    steps:
+      - run: sleep 180
+      - if: always()
+        run: echo "slow step always ran"
+      - if: cancelled()
+        run: echo "slow step cancelled ran"
+
+  running_always:
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - run: sleep 180 && echo "running_always finished sleep"
+      - if: always()
+        run: echo "running_always step always ran"
+
+  queued_always:
+    needs: slow
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "queued_always ran, slow result ${{ needs.slow.result }}"
+
+  queued_cancelled:
+    needs: slow
+    if: cancelled()
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "queued_cancelled ran"
+
+  queued_not_cancelled:
+    needs: slow
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "queued_not_cancelled ran"
